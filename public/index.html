@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Крутий Онлайн-Чат</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div id="register">
+        <input id="username" placeholder="Введіть ім'я">
+        <button onclick="register()">Зареєструватися</button>
+    </div>
+    
+    <div class="container">
+        <div id="chat-container">
+            <div class="chat-area">
+                <div id="chat"></div>
+                <div id="users"></div>
+            </div>
+            <div class="input-area">
+                <input id="message" placeholder="Введіть повідомлення">
+                <select id="recipient">
+                    <option value="">Всім</option>
+                </select>
+                <button onclick="sendMessage()">Відправити</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        let username;
+
+        function register() {
+            username = document.getElementById('username').value.trim();
+            if (username) {
+                socket.emit('register', username);
+                document.getElementById('register').style.display = 'none';
+                document.getElementById('chat-container').style.display = 'flex';
+            }
+        }
+
+        function sendMessage() {
+            const message = document.getElementById('message').value.trim();
+            const recipient = document.getElementById('recipient').value;
+            
+            if (message) {
+                if (recipient) {
+                    socket.emit('private-message', { to: recipient, message });
+                } else {
+                    socket.emit('chat-message', message);
+                }
+                document.getElementById('message').value = '';
+            }
+        }
+
+        socket.on('chat-message', (msg) => {
+            const chat = document.getElementById('chat');
+            chat.innerHTML += `<p><b>${msg.username}</b> (${msg.time}): ${msg.text}</p>`;
+            chat.scrollTop = chat.scrollHeight;
+        });
+
+        socket.on('private-message', (msg) => {
+            const chat = document.getElementById('chat');
+            chat.innerHTML += `<p><b>[Приватно] ${msg.from}</b>: ${msg.text}</p>`;
+            chat.scrollTop = chat.scrollHeight;
+        });
+
+        socket.on('user-connected', (username) => {
+            const chat = document.getElementById('chat');
+            chat.innerHTML += `<p><i>${username} підключився</i></p>`;
+        });
+
+        socket.on('user-disconnected', (username) => {
+            const chat = document.getElementById('chat');
+            chat.innerHTML += `<p><i>${username} відключився</i></p>`;
+        });
+
+        socket.on('update-users', (users) => {
+            const userList = document.getElementById('users');
+            const recipient = document.getElementById('recipient');
+            userList.innerHTML = '<h3>Користувачі:</h3>' + users.map(u => `<p>${u}</p>`).join('');
+            recipient.innerHTML = '<option value="">Всім</option>' + 
+                users.filter(u => u !== username).map(u => `<option value="${u}">${u}</option>`).join('');
+        });
+
+        socket.on('chat-history', (history) => {
+            const chat = document.getElementById('chat');
+            chat.innerHTML = history.map(msg => 
+                `<p><b>${msg.username}</b> (${msg.time}): ${msg.text}</p>`
+            ).join('');
+        });
+    </script>
+</body>
+</html>

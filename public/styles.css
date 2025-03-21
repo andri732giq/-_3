@@ -1,0 +1,155 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
+.container {
+    width: 1000px;
+    height: 700px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#register {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.15);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
+#register input {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.9);
+    width: 200px;
+    margin-right: 10px;
+}
+
+#register button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    background: #00c6ff;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#register button:hover {
+    background: #0072ff;
+    transform: translateY(-2px);
+}
+
+#chat-container {
+    display: none;
+    height: 100%;
+    width: 100%;
+}
+
+.chat-area {
+    display: flex;
+    height: 85%;
+}
+
+#chat {
+    flex: 3;
+    padding: 25px;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+#chat p {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    margin: 8px 0;
+    word-wrap: break-word;
+    transition: all 0.2s ease;
+}
+
+#chat p:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateX(5px);
+}
+
+#users {
+    flex: 1;
+    padding: 25px;
+    background: rgba(0, 0, 0, 0.3);
+    border-left: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+#users h3 {
+    color: #00c6ff;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+
+#users p {
+    padding: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.input-area {
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    gap: 15px;
+    border-top: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+#message {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.95);
+    transition: all 0.3s ease;
+}
+
+#message:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 198, 255, 0.5);
+}
+
+#recipient {
+    padding: 12px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.95);
+}
+
+button {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    background: #00c6ff;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: #0072ff;
+    transform: translateY(-2px);
+}
